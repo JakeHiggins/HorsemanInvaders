@@ -32,7 +32,17 @@ void Game::Init() {
 
 void Game::LoadContent() {
 	ActorFactory factory = ActorFactory();
-	AddActor(factory, "../../Assets/Actors/cube.xml");
+
+	for (unsigned int x = 0; x < 11; x++) {
+		for (unsigned int y = 0; y < 5; y++) {
+			StrongActorPtr actor = factory.CreateActor("../../Assets/Actors/invader.xml");
+			shared_ptr<TransformComponent> transform = MakeStrongPtr(actor->GetComponent<TransformComponent>(TransformComponent::g_Name));
+			transform->Translation = vec3(x * 3, y * 3, 0);
+			m_Actors.push_back(actor);
+		}
+	}
+	
+	//AddActor(factory, "../../Assets/Actors/invader.xml");
 	Renderer->LoadContent();
 
 	bool result = m_pFont->LoadFont("consolas");
